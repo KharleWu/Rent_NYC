@@ -1,24 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>NYC Migration Analysis — Fullscreen Map (Exclusive Layers + Legend)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
+<script src="https://js.arcgis.com/4.29/"></script>
 <style>
-	.embed-container 
-	{	
-		position: relative; 
-		display: flex;
-      justify-content: center;
-      align-items: center;
-		padding-bottom: 100%; 
-		height: 0; 
-		max-width: 80%;} 
-	.embed-container iframe, 
-	.embed-container object, 
-	.embed-container 
-	iframe{position: absolute; top: 0; left: 0; width: 50%; height: 50%;} 
-	small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}
-	</style>
-	<div class="embed-container">
-		<iframe width="400" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Final_1_YW" src="//prattsavi.maps.arcgis.com/apps/Embed/index.html?webmap=b95bf85a5c574149a9e04775f90b554c&extent=-74.6848,40.3412,-73.2071,40.932&home=true&zoom=true&previewImage=false&scale=true&details=true&legend=true&active_panel=legend&disable_scroll=true&theme=light"></iframe>
-	</div>
-</html>
+  /* ===== Page layout: full-viewport map ===== */
+  html, body, #viewDiv {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f5f7fb;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  }
 
+  /* ===== Floating segmented toolbar (top-center) ===== */
+  .toolbar {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    z-index: 10;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    border-radius: 999px;
+    padding: 4px;
+    backdrop-filter: saturate(180%) blur(6px);
+  }
+  .seg {
+    appearance: none;
+    border: 0;
+    padding: 9px 14px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f3f4f6;
+    color: #111827;
+    transition: all .15s ease;
+    border-radius: 999px;
+    margin: 2px;
+  }
+  .seg:hover { background: #e5e7eb; }
+  .seg[aria-pressed="true"] {
+    background: #111827;
+    color: #fff;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor; opacity: .9;
+  }
+  .lbl { white-space: nowrap; }
+
+  @media (max-width: 480px) {
+    .toolbar { top: 10px; padding: 4px; }
+    .seg { font-size: 13px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+  <!-- Floating segmented control (exclusive layer toggles) -->
+  <div class="toolbar" role="toolbar" aria-label="Layer toggles (exclusive)">
+    <!-- Move Volume: default OFF -->
+    <button
+      id="btn-move"
+      class="seg"
+      type="button"
+      aria-pressed="false"
+      data-layer-title="2023_JanToJune_MoveVolume"
+      title="Show 'Move Volume' layer (hides 'Population Change')">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="lbl">Move Volume</span>
+    </button>
+
+    <!-- Population Change: default ON -->
+    <button
+      id="btn-pop"
+      class="seg"
+      type="button"
+      aria-pressed="true"
+      data-layer-title="2023_JanToJune_PopChange"
+      title="Show 'Population Change' layer (hides 'Move Volume')">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="lbl">Population Change</span>
+    </button>
+  </div>
+
+  <!-- Map container -->
+  <div id="viewDiv"></div>
+
+<script>
+/* ========= ArcGIS JS API setup ========= */
+require([
+  "esri/WebMap",
+  "esri/views/MapView",
+  "esri/widgets/Legend"
+], function(WebMap, MapView, Legend) {
+
+  // Load your WebMap by ID
+  const webmap = new WebMap({
+    portalItem: { id: "b95bf85a5c574149a9e04775f90b554c" }
+  });
+
+  // Create a fullscreen MapView
+  const view = new MapView({
+    container: "viewDiv",
+    map: webmap,
+    constraints: {
+      // Smoother zoom steps
+      snapToZoom: false
+    },
+    // Add top padding so toolbar doesn't overlap attribution/scale
+    padding: { top: 60 }
+  });
+
+  // References to UI buttons
+  const btnMove = document.getElementById("btn-move");
+  const btnPop  = document.getElementById("btn-pop");
+
+  // Helper: set exclusive visibility and keep button states in sync
+  function setExclusiveVisibility({ showLayer, hideLayer, showBtn, hideBtn }) {
+    if (showLayer) showLayer.visible = true;
+    if (hideLayer) hideLayer.visible = false;
+    if (showBtn)   showBtn.setAttribute("aria-pressed", "true");
+    if (hideBtn)   hideBtn.setAttribute("aria-pressed", "false");
+  }
+
+  // When view + layers are ready
+  view.when(async () => {
+    await webmap.loadAll(); // Ensure all sublayers are available
+
+    // Build a title → layer index; includes all child layers
+    const byTitle = new Map();
+    view.map.allLayers.forEach(l => {
+      if (l.title) byTitle.set(l.title.trim(), l);
+    });
+
+    // Resolve the two target layers
+    const lyrMove = byTitle.get("2023_JanToJune_MoveVolume");
+    const lyrPop  = byTitle.get("2023_JanToJune_PopChange");
+
+    // Initial state: Pop ON, Move OFF (exclusive)
+    setExclusiveVisibility({
+      showLayer: lyrPop,
+      hideLayer: lyrMove,
+      showBtn: btnPop,
+      hideBtn: btnMove
+    });
+
+    // Wire up exclusive toggles
+    btnMove.addEventListener("click", () => {
+      // If already active, do nothing; else switch
+      if (btnMove.getAttribute("aria-pressed") === "true") return;
+      setExclusiveVisibility({
+        showLayer: lyrMove,
+        hideLayer: lyrPop,
+        showBtn: btnMove,
+        hideBtn: btnPop
+      });
+    });
+
+    btnPop.addEventListener("click", () => {
+      if (btnPop.getAttribute("aria-pressed") === "true") return;
+      setExclusiveVisibility({
+        showLayer: lyrPop,
+        hideLayer: lyrMove,
+        showBtn: btnPop,
+        hideBtn: btnMove
+      });
+    });
+
+    // Add a Legend; it automatically reflects visible layers
+    const legend = new Legend({ view });
+    view.ui.add(legend, "bottom-left");
+
+    // Optional: if visibility changes elsewhere, keep buttons in sync
+    [lyrMove, lyrPop].forEach(l => {
+      if (!l) return;
+      l.watch("visible", () => {
+        // Enforce exclusivity in case someone flips visibility via another widget
+        if (l === lyrMove && lyrMove.visible) {
+          setExclusiveVisibility({
+            showLayer: lyrMove, hideLayer: lyrPop, showBtn: btnMove, hideBtn: btnPop
+          });
+        }
+        if (l === lyrPop && lyrPop.visible) {
+          setExclusiveVisibility({
+            showLayer: lyrPop, hideLayer: lyrMove, showBtn: btnPop, hideBtn: btnMove
+          });
+        }
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
 
