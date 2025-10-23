@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			.chartCard {
+				 width: 100vw;
+				 display: flex;
+				 align-items: center;
+				 justify-content: center;
+				 margin: 0;
+				 padding: 0;
+				}
+			.chartBox {
+				 width: 24vw;
+				 padding: 0px;
+				 padding-bottom: 1vw;
+				 margin: 0px;
+				}
+			h3 {
+				font-family: "courier prime", sans-serif;
+				margin: 0;
+				padding: 0;
+				font-size: 1vw;
+				color: black;
+				text-align: center;}
+			/* 第一排button */
+			.button1 {
+				font-family: "courier prime", sans-serif;
+				display: block;
+				width: 15vw;
+				padding: 1vw;
+				font-size: 1.1vw;
+				color: #F4F4F9;
+				cursor: pointer;
+				margin: 5px;
+				background-color: #242325;
+				border: none;
+				border-radius: 5vw;
+			}
+			.button1:hover{animation: pulse 1.4s ease-in-out infinite;}
+			@keyframes pulse{0%{box-shadow: 0 0 3vw #fda736;}}	
+			.confirm-button {
+				background-color: #A41623;
+				font-family: "courier prime", sans-serif;
+				display: block;
+				width: 15vw;
+				padding: 1.5vw;
+				font-size: 1.1vw;
+				color: #f4f4f9;
+				cursor: pointer;
+				margin: 5px;
+				border: none;
+				border-radius: 5vw;}
+			.confirm-button:hover{animation: pulse_1 1.4s ease-in-out infinite;}
+			@keyframes pulse_1{0%{box-shadow: 0 0 3vw #A41623;}}
+			/* 点击button */
+			.click-button {
+				font-family: "courier prime", sans-serif;
+				display: block;
+				width: 15vw;
+				padding: 1vw;
+				font-size: 1.1vw;
+				color: #242325;
+				cursor: pointer;
+				margin: 5px;
+				background-color: #fda736;
+				border: none;
+				border-radius: 5vw;
+			}
+			/* 初始状态下隐藏所有文本 */
+			.text-container {display: none;}
+			.button-group {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 1vw;}
+		</style>
+	</head>
+	<body>
+		<div class="button-group" id="row1">
+			<!-- 第一组按钮 -->
+			<button class="button1" data-target="text1">Manhattan</button>
+			<button class="button1" data-target="text2">Brooklyn</button>
+			<button class="button1" data-target="text3">Queens</button>
+			<button class="button1" data-target="text4">Bronx</button>
+			<!-- 第二组按钮 -->
+		</div>
+
+		<!-- 确认按钮 -->
+		<div class="button-group">
+			<button class="confirm-button" onclick="confirmSelection()">Confirm</button>
+		</div>
+
+		<!-- Manhattan-->
+		<div id="text1" class="text-container">
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Battery Park City</h3>
+					<canvas id="myChart"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Chelsea</h3>
+					<canvas id="myChart1"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>East Village</h3>
+					<canvas id="myChart2"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Financial District</h3>
+					<canvas id="myChart3"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Gramercy Park</h3>
+					<canvas id="myChart4"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Greenwich Village</h3>
+					<canvas id="myChart5"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Harlem</h3>
+					<canvas id="myChart6"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Lower East Side</h3>
+					<canvas id="myChart7"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Midtown East</h3>
+					<canvas id="myChart8"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Midtown West</h3>
+					<canvas id="myChart9"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Murray Hill</h3>
+					<canvas id="myChart10"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Soho</h3>
+					<canvas id="myChart11"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Tribeca</h3>
+					<canvas id="myChart12"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Upper East Side</h3>
+					<canvas id="myChart13"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Upper West Side</h3>
+					<canvas id="myChart14"></canvas>
+				</div>
+				<div class="chartBox">
+					
+					<canvas id="sample_m1"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<!-- Brooklyn -->
+		<div id="text2" class="text-container">
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Bay Ridge</h3>
+					<canvas id="myChartb"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Bed Stuy</h3>
+					<canvas id="myChartb1"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Boerum Hill</h3>
+					<canvas id="myChartb2"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Brooklyn Heights</h3>
+					<canvas id="myChartb3"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Bushwick</h3>
+					<canvas id="myChartb4"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Clinton Hill</h3>
+					<canvas id="myChartb5"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Cobble Hill</h3>
+					<canvas id="myChartb6"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Crown Heights</h3>
+					<canvas id="myChartb7"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Downtown BK</h3>
+					<canvas id="myChartb8"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Dumbo</h3>
+					<canvas id="myChartb9"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Fort Greene</h3>
+					<canvas id="myChartb10"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Greenpoint</h3>
+					<canvas id="myChartb11"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Park Slope</h3>
+					<canvas id="myChartb12"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>PLG/Flatbush</h3>
+					<canvas id="myChartb13"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Williamsburg</h3>
+					<canvas id="myChartb14"></canvas>
+				</div>
+				<div class="chartBox">
+					<canvas id="myChartb15"></canvas>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Queens -->
+		<div id="text3" class="text-container">
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Astoria</h3>
+					<canvas id="myChartq"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Flushing</h3>
+					<canvas id="myChartq1"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Forest Hills</h3>
+					<canvas id="myChartq2"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Jackson Heights</h3>
+					<canvas id="myChartq3"></canvas>
+				</div>
+			</div>
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Long Island City</h3>
+					<canvas id="myChartq4"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Rego Park</h3>
+					<canvas id="myChartq5"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Ridgewood</h3>
+					<canvas id="myChartq6"></canvas>
+				</div>
+				<div class="chartBox">
+					<canvas id="myChartq7"></canvas>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Bronx -->
+		<div id="text4" class="text-container">
+			<div class="chartCard">
+				<div class="chartBox">
+					<h3>Concourse/Highbridge</h3>
+					<canvas id="myChartbr"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Morris-University Heights</h3>
+					<canvas id="myChartbr1"></canvas>
+				</div>
+				<div class="chartBox">
+					<h3>Mott Haven</h3>
+					<canvas id="myChartbr2"></canvas>
+				</div>
+				<div class="chartBox">
+					<canvas id="myChartbr3"></canvas>
+				</div>
+			</div>
+
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+		<script>
+			const labels_manbrook = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
+			const labels_bronx = ['2020', '2021', '2022'];
+			const labels_queens = ['2017', '2018', '2019', '2020', '2021', '2022'];
+			
+			const options_m_sample = {
+				  responsive: true,
+				  scales: {
+				    x: {display: true, 
+						grid: {display: false,},
+						border: {color: "#A41623", lineWidth:3},
+					    ticks: {font: {family: "courier prime", size: 10}}},
+				    y: {display: true,
+						border: {color: "#F4F4F9",},
+						min: 2500,
+						max: 7500,
+						grid: {display: true, drawTicks: false, color: "#242325",},
+						ticks: {display: true, count: 5, font: {family: "courier prime", size: 10}},}
+				  },
+				  elements: {point: {radius: 2,},},
+				  plugins: {legend: {display: false,},}
+				};
+			//Manhattan With Doorman
+			const options_mb = {
+				  responsive: true,
+				  scales: {
+				    x: {display: true, 
+						grid: {display: false,},
+						ticks: {display: true,},
+						border: {color: "#A41623", lineWidth:3},},
+				    y: {display: true,
+						border: {color: "#F4F4F9",},
+						min: 2500,
+						max: 7500,
+						grid: {display: true, drawTicks: false, color: "#242325",},
+						ticks: {display: true, count: 5,},}
+				  },
+				  elements: {point: {radius: 2,},},
+				  plugins: {legend: {display: false,},}
+				};
+			
+			const options_b_sample = {
+				  responsive: true,
+				  scales: {
+				    x: {display: true, 
+						grid: {display: false,},
+						border: {color: "#A41623", lineWidth:3},
+					    ticks: {font: {family: "courier prime", size: 10}}},
+				    y: {display: true,
+						border: {color: "#F4F4F9",},
+						min: 1500,
+						max: 5500,
+						grid: {display: true, drawTicks: false, color: "#242325",},
+						ticks: {display: true, count: 5, font: {family: "courier prime", size: 10}},}
+				  },
+				  elements: {point: {radius: 2,},},
+				  plugins: {legend: {display: false,},}
+				};
+			//Brooklyn, Queens, Bronx
+			const options_b = {
+				  responsive: true,
+				  scales: {
+				    x: {display: true, 
+						grid: {display: false,},
+						ticks: {display: true,},
+						border: {color: "#A41623", lineWidth:3},},
+				    y: {display: true,
+						border: {color: "#F4F4F9",},
+						min: 1500,
+						max: 5500,
+						grid: {display: true, drawTicks: false, color: "#242325",},
+						ticks: {display: true, count: 5,},}
+				  },
+				  elements: {point: {radius: 2,},},
+				  plugins: {legend: {display: false,},}
+				};
+			
+			
+			// 记录两个变量
+			var s = 0;
+			var variable_m = '';
+
+			//Manhattan With Doorman
+			function fig1(){
+
+				const data_m = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: "With Doorman",
+						data: [4142, 4273, 4548, 4580, 4628, 4639, 4792, 4571, 4438, 5255],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				
+				var myChart = createChartFull("myChart", {
+					type: 'line',
+					data: data_m,
+					options: options_mb,
+				}); 
+
+				const data_m1 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4752, 4725, 5035, 5024, 4705, 4935, 5095, 4696, 4987, 5952],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3625, 3571, 3596, 3318, 3366, 3348, 3386, 3408, 2843, 3642],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart1 = createChartFull("myChart1", {
+					type: 'line',
+					data: data_m1,
+					options: options_mb
+				})
+
+				const data_m2 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4128, 4303, 4749, 4712, 4610, 4386, 4783, 4266, 4385, 5282],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3008, 2952, 2871, 3244, 3302, 3281, 3322, 3339, 2796, 3540],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart2 = createChartFull("myChart2", {
+					type: 'line',
+					data: data_m2,
+					options: options_mb,
+				})
+
+				const data_m3 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4110, 4085, 4259, 4276, 4285, 4181, 4342, 4074, 4352, 5255],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3670, 3759, 3948, 3391, 3424, 3439, 3437, 3442, 2861, 3641],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart3 = createChartFull("myChart3", {
+					type: 'line',
+					data: data_m3,
+					options: options_mb,
+				})
+
+				const data_m4 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4590, 4248, 4538, 4404, 4304, 4389, 4596, 4331, 4360, 5038],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3315, 3202, 3159, 3284, 3330, 3297, 3330, 3356, 2779, 3570],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart4 = createChartFull("myChart4", {
+					type: 'line',
+					data: data_m4,
+					options: options_mb,
+				})
+
+				const data_m5 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4829, 4748, 4799, 4948, 5097, 5218, 5362, 5144, 5029, 6043],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3667, 3789, 3785, 3360, 3402, 3392, 3427, 3421, 2873, 3671],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart5 = createChartFull("myChart5", {
+					type: 'line',
+					data: data_m5,
+					options: options_mb,
+				})
+				
+				const data_m6 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [2538, 2873, 3343, 3155, 3272, 3199, 3210, 3165, 2850, 3459],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [2011, 2057, 2168, 3162, 3211, 3192, 3220, 3245, 2690, 3405],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart6 = createChartFull("myChart6", {
+					type: 'line',
+					data: data_m6,
+					options: options_mb,
+				})
+
+				const data_m7 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [3808, 4039, 4250, 3998, 4067, 4245, 4699, 4310, 4507, 5512],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [2796, 2818, 2781, 3241, 3282, 3259, 3289, 3308, 2758, 3515],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart7 = createChartFull("myChart7", {
+					type: 'line',
+					data: data_m7,
+					options: options_mb,
+				})
+
+				const data_m8 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4203, 4006, 4050, 4028, 4083, 4073, 4322, 4044, 4024, 4840],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3104, 3110, 2945, 3243, 3300, 3263, 3291, 3283, 2745, 3521],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart8 = createChartFull("myChart8", {
+					type: 'line',
+					data: data_m8,
+					options: options_mb,
+				})
+
+				const data_m9 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4222, 4256, 4313, 4203, 4155, 4188, 4284, 3925, 4073, 4989],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [2890, 2761, 2810, 3234, 3279, 3256, 3280, 3285, 2741, 3502],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart9 = createChartFull("myChart9", {
+					type: 'line',
+					data: data_m9,
+					options: options_mb,
+				})
+
+				const data_m10 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [3926, 3962, 3994, 3878, 3865, 4022, 4179, 3821, 3926, 4795],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3154, 3087, 3029, 3255, 3316, 3284, 3303, 3301, 2765, 3553],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart10 = createChartFull("myChart10", {
+					type: 'line',
+					data: data_m10,
+					options: options_mb,
+				})
+
+				const data_m11 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [5643, 5254, 6213, 6234, 6574, 6404, 6356, 6358, 6287, 7116],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [3859, 3700, 3925, 3404, 3467, 3432, 3453, 3448, 2862, 3626],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart11 = createChartFull("myChart11", {
+					type: 'line',
+					data: data_m11,
+					options: options_mb,
+				})
+
+				const data_m12 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [5059, 4974, 5239, 5450, 5214, 5301, 5358, 5221, 5298, 6364],
+						borderColor: '#FDA736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [6024, 5826, 5505, 3641, 3674, 3684, 3704, 3647, 3152, 3958],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart12 = createChartFull("myChart12", {
+					type: 'line',
+					data: data_m12,
+					options: options_mb,
+				})
+
+				const data_m13 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4123, 4107, 4217, 4246, 4284, 4360, 4507, 4260, 4129, 4939],
+						borderColor: '#FDA736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [2684, 2629, 2681, 3224, 3272, 3249, 3275, 3271, 2738, 3521],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart13 = createChartFull("myChart13", {
+					type: 'line',
+					data: data_m13,
+					options: options_mb,
+				})
+
+				const data_m14 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'With Doorman',
+						data: [4131, 4184, 4317, 4334, 4254, 4302, 4405, 4170, 4301, 5204],
+						borderColor: '#FDA736',
+						borderWidth: 2,
+						fill: false
+					}, {
+						label: 'No Doorman',
+						data: [2916, 2913, 2926, 3275, 3321, 3284, 3327, 3219, 2789, 3558],
+						borderColor: '#808080',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart14 = createChartFull("myChart14", {
+					type: 'line',
+					data: data_m14,
+					options: options_mb,
+				})
+				
+				/*
+				var myChart15 = createChartFull("sample_m1", {
+					type: 'line',
+					options: options_m_sample,
+				})
+				*/
+				
+				}
+			
+			//Brooklyn
+			function fig2(){
+
+				const data_m = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: "Rent",
+						data: [1593, 1700, 1737, 1827, 1806, 1818, 1850, 1855, 1829, 1964],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart = createChartFull("myChartb", {
+					type: 'line',
+					data: data_m,
+					options: options_b,
+				});
+
+				const data_m1 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [1797, 1936, 1983, 2134, 2146, 2180, 2248, 2226, 2248, 2642],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart1 = createChartFull("myChartb1", {
+					type: 'line',
+					data: data_m1,
+					options: options_b
+				})
+
+				const data_m2 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2750, 2875, 3028, 2926, 2908, 3057, 3103, 2824, 3418],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart2 = createChartFull("myChartb2", {
+					type: 'line',
+					data: data_m2,
+					options: options_b,
+				})
+
+				const data_m3 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [3293, 3300, 3333, 3324, 3439, 3446, 3799, 3526, 3422, 4313],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart3 = createChartFull("myChartb3", {
+					type: 'line',
+					data: data_m3,
+					options: options_b,
+				})
+
+				const data_m4 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [1988, 2096, 2080, 2166, 2168, 2265, 2436, 2363, 2436, 2811],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart4 = createChartFull("myChartb4", {
+					type: 'line',
+					data: data_m4,
+					options: options_b,
+				})
+
+				const data_m5 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2435, 2533, 2563, 2595, 2587, 2653, 2865, 2749, 2699, 3499],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart5 = createChartFull("myChartb5", {
+					type: 'line',
+					data: data_m5,
+					options: options_b,
+				})
+
+				const data_m6 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2738, 2912, 2912, 3046, 2933, 2996, 3063, 2985, 3001, 3700],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart6 = createChartFull("myChartb6", {
+					type: 'line',
+					data: data_m6,
+					options: options_b,
+				})
+
+				const data_m7 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [1798, 2021, 1934, 2120, 2119, 2193, 2256, 2200, 2153, 2526],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart7 = createChartFull("myChartb7", {
+					type: 'line',
+					data: data_m7,
+					options: options_b,
+				})
+
+				const data_m8 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [4031, 4154, 4249, 4334, 4322, 3526, 4478, 3419, 3617, 4462],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart8 = createChartFull("myChartb8", {
+					type: 'line',
+					data: data_m8,
+					options: options_b
+				})
+
+				const data_m9 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [3139, 3249, 3439, 3341, 3465, 4484, 3724, 4387, 4287, 5095],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart9 = createChartFull("myChartb9", {
+					type: 'line',
+					data: data_m9,
+					options: options_b
+				})
+
+				const data_m10 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2813, 2913, 2972, 3116, 3071, 3191, 3355, 3243, 3236, 4137],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart10 = createChartFull("myChartb10", {
+					type: 'line',
+					data: data_m10,
+					options: options_b,
+				})
+
+				const data_m11 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2827, 2834, 2695, 2737, 2709, 2700, 3051, 3000, 3070, 4094],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart11 = createChartFull("myChartb11", {
+					type: 'line',
+					data: data_m11,
+					options: options_b,
+
+				})
+
+				const data_m12 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [2581, 2619, 2659, 2637, 2614, 2702, 2823, 2685, 2661, 3262],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart12 = createChartFull("myChartb12", {
+					type: 'line',
+					data: data_m12,
+					options: options_b,
+
+				})
+
+				const data_m13 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [1655, 1721, 1731, 1940, 1997, 2096, 2117, 2090, 2045, 2386],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart13 = createChartFull("myChartb13", {
+					type: 'line',
+					data: data_m13,
+					options: options_b,
+				})
+
+				const data_m14 = {
+					labels: labels_manbrook,
+					datasets: [{
+						label: 'Rent',
+						data: [3270, 3266, 3432, 3240, 3119, 2998, 3289, 3191, 3165, 3964],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart14 = createChartFull("myChartb14", {
+					type: 'line',
+					data: data_m14,
+					options: options_b,
+				})
+				
+				}
+			
+			//Queens
+			function fig3(){
+				const data_m = {
+					labels: labels_queens,
+					datasets: [{
+						label: "Rent",
+						data: [2181, 2159, 2215, 2177, 2089, 2554],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart = createChartFull("myChartq", {
+					type: 'line',
+					data: data_m,
+					options: options_b,
+				});
+
+				const data_m1 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [2130, 2086, 2063, 2166, 2097, 2171],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart1 = createChartFull("myChartq1", {
+					type: 'line',
+					data: data_m1,
+					options: options_b
+				})
+
+				const data_m2 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [2044, 2103, 2153, 2160, 2059, 2316],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart2 = createChartFull("myChartq2", {
+					type: 'line',
+					data: data_m2,
+					options: options_b,
+				})
+
+				const data_m3 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [1888, 1914, 1957, 2019, 1956, 2106],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart3 = createChartFull("myChartq3", {
+					type: 'line',
+					data: data_m3,
+					options: options_b,
+				})
+
+				const data_m4 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [3018, 3208, 3397, 3254, 3313, 4158],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart4 = createChartFull("myChartq4", {
+					type: 'line',
+					data: data_m4,
+					options: options_b,
+				})
+
+				const data_m5 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [2058, 2096, 2168, 2164, 2190, 2266],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart5 = createChartFull("myChartq5", {
+					type: 'line',
+					data: data_m5,
+					options: options_b,
+				})
+
+				const data_m6 = {
+					labels: labels_queens,
+					datasets: [{
+						label: 'Rent',
+						data: [1981, 1995, 2073, 2052, 2059, 2387],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart6 = createChartFull("myChartq6", {
+					type: 'line',
+					data: data_m6,
+					options: options_b,
+				})
+				
+				}
+			
+			//Bronx
+			function fig4(){
+				const data_m = {
+					labels: labels_bronx,
+					datasets: [{
+						label: "Rent",
+						data: [1803, 1804, 1901],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart = createChartFull("myChartbr", {
+					type: 'line',
+					data: data_m,
+					options: options_b,
+				});
+
+				const data_m1 = {
+					labels: labels_bronx,
+					datasets: [{
+						label: 'Rent',
+						data: [1741, 1712, 1846],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart1 = createChartFull("myChartbr1", {
+					type: 'line',
+					data: data_m1,
+					options: options_b
+				})
+
+				const data_m2 = {
+					labels: labels_bronx,
+					datasets: [{
+						label: 'Rent',
+						data: [2164, 2345, 2789],
+						borderColor: '#fda736',
+						borderWidth: 2,
+						fill: false
+					}]
+				}
+				var myChart2 = createChartFull("myChartbr2", {
+					type: 'line',
+					data: data_m2,
+					options: options_b,
+				})
+				}
+
+			if (s === 0) {
+				document.getElementById('text1').style.display = 'block';
+				var tmp = document.getElementsByClassName('button1');
+				tmp[0].classList.add('click-button');
+				variable_m = 'text1';
+				fig1();
+				s = 1;}
+			
+			// 更新变量的函数
+			function updateVariable(variable, value) {
+
+				var buttons = document.getElementsByClassName('button1');
+				for (var i = 0; i < buttons.length; i++) 
+				{buttons[i].classList.remove('click-button');}
+				// 将当前点击的按钮样式设置为变色
+				event.currentTarget.classList.add('click-button');
+				variable_m = value;
+			}
+
+			// 用户确认选择的函数
+			function confirmSelection() {
+			          // 先隐藏所有文本容器
+			          var textContainers = document.getElementsByClassName('text-container');
+			          for (var i = 0; i < textContainers.length; i++) {
+			              textContainers[i].style.display = 'none';
+			          }
+
+			          // 根据两个变量的值显示相应的文本容器
+			          var selectedText = document.getElementById(variable_m);
+			          selectedText.style.display = 'block';
+				if(variable_m == "text1") {
+					fig1();
+				}
+				else if(variable_m == "text2") {
+					fig2();
+				}
+				else if(variable_m == "text3") {
+					fig3();
+				}
+				else if(variable_m == "text4") {
+					fig4();
+				}
+			      }
+		</script>
+
+<!-- Injected by ChatGPT: streamlined helpers + safe chart creation + event binding -->
+<script>
+/* ===== Chart instance registry to prevent duplicates ===== */
+const CHART_REGISTRY = new Map();
+
+/* Create chart with full Chart.js config object (type+data+options).
+   Also auto-fixes dataset length mismatches by padding with nulls. */
+function createChartFull(canvasId, config, destroyIfExists=false) {
+  const el = document.getElementById(canvasId);
+  if (!el) return null;
+
+  if (!config || typeof config !== 'object') return null;
+
+  // Defensive copy
+  const cfg = JSON.parse(JSON.stringify(config));
+
+  // If labels + datasets provided, normalize lengths
+  try {
+    const labels = cfg.data && cfg.data.labels ? cfg.data.labels : null;
+    if (labels && Array.isArray(labels) && cfg.data.datasets && Array.isArray(cfg.data.datasets)) {
+      const L = labels.length;
+      cfg.data.datasets.forEach(ds => {
+        if (!Array.isArray(ds.data)) ds.data = [];
+        if (ds.data.length < L) {
+          // pad with nulls to avoid Chart.js errors
+          ds.data = ds.data.concat(Array(L - ds.data.length).fill(null));
+        } else if (ds.data.length > L) {
+          ds.data = ds.data.slice(0, L);
+        }
+      });
+    }
+  } catch(e) { /* no-op */ }
+
+  if (CHART_REGISTRY.has(canvasId)) {
+    if (!destroyIfExists) return CHART_REGISTRY.get(canvasId);
+    try { CHART_REGISTRY.get(canvasId).destroy(); } catch(e) {}
+    CHART_REGISTRY.delete(canvasId);
+  }
+
+  const ctx = el.getContext('2d');
+  const chart = new Chart(ctx, cfg);
+  CHART_REGISTRY.set(canvasId, chart);
+  return chart;
+}
+
+/* Destroy all charts under a container (by DOM id) */
+function destroyChartsUnder(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.querySelectorAll('canvas[id]').forEach(cv => {
+    const id = cv.id;
+    if (CHART_REGISTRY.has(id)) {
+      try { CHART_REGISTRY.get(id).destroy(); } catch(e) {}
+      CHART_REGISTRY.delete(id);
+    }
+  });
+}
+
+/* Options factory to DRY up repeated chart options */
+function makeLineOptions({
+  yMin=0, yMax=100, showXTicks=false, showYTicks=false,
+  borderColor="#A41623", gridColor="#242325",
+  fontFamily="courier prime", fontSize=10
+} = {}) {
+  return {
+    responsive: true,
+    scales: {
+      x: {
+        display: true,
+        grid: { display: false },
+        ticks: { display: showXTicks, font: { family: fontFamily, size: fontSize } },
+        border: { color: borderColor, lineWidth: 3 }
+      },
+      y: {
+        display: true,
+        min: yMin,
+        max: yMax,
+        grid: { display: true, drawTicks: false, color: gridColor },
+        ticks: { display: showYTicks, count: 5, font: { family: fontFamily, size: fontSize } },
+        border: { color: "#F4F4F9" }
+      }
+    },
+    elements: { point: { radius: 2 } },
+    plugins: { legend: { display: false } }
+  };
+}
+
+/* Example option aliases you can reuse (non-breaking if you already define your own) */
+window.options_mb = window.options_mb || makeLineOptions({ yMin: 2500, yMax: 7500, showXTicks:false, showYTicks:false });
+window.options_b  = window.options_b  || makeLineOptions({ yMin: 1500, yMax: 5500, showXTicks:false, showYTicks:false });
+window.options_m_sample = window.options_m_sample || makeLineOptions({ yMin: 2500, yMax: 7500, showXTicks:true,  showYTicks:true  });
+window.options_b_sample = window.options_b_sample || makeLineOptions({ yMin: 1500, yMax: 5500, showXTicks:true,  showYTicks:true  });
+
+/* --- Button event binding & view switching (replaces fragile inline event usage) --- */
+(function initAreaButtons(){
+  // Map legacy onclick="updateVariable('variable','textX')" -> data-target attr is added via regex below
+  const buttons = document.querySelectorAll('.button1[data-target]');
+  if (!buttons.length) return;
+
+  // Track current target; default to first
+  let variable_m = (buttons[0] && buttons[0].getAttribute('data-target')) || 'text1';
+
+  // Highlight default
+  buttons.forEach(b => b.classList.remove('click-button'));
+  const defaultBtn = Array.from(buttons).find(b => b.getAttribute('data-target') === variable_m) || buttons[0];
+  if (defaultBtn) defaultBtn.classList.add('click-button');
+
+  // Show default section
+  const firstSection = document.getElementById(variable_m);
+  if (firstSection) {
+    firstSection.style.display = 'block';
+    if (!firstSection.dataset.inited) {
+      if (typeof fig1 === 'function' && variable_m === 'text1') fig1();
+      if (typeof fig2 === 'function' && variable_m === 'text2') fig2();
+      if (typeof fig3 === 'function' && variable_m === 'text3') fig3();
+      if (typeof fig4 === 'function' && variable_m === 'text4') fig4();
+      firstSection.dataset.inited = '1';
+    }
+  }
+
+  // Wire click handlers
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      buttons.forEach(b => b.classList.remove('click-button'));
+      e.currentTarget.classList.add('click-button');
+      variable_m = e.currentTarget.getAttribute('data-target');
+    });
+  });
+
+  // Provide a global confirmSelection for legacy Confirm button
+  window.confirmSelection = function(){
+    // hide all sections
+    document.querySelectorAll('.text-container').forEach(c => c.style.display = 'none');
+    // show selected
+    const selected = document.getElementById(variable_m);
+    if (!selected) return;
+    selected.style.display = 'block';
+    if (!selected.dataset.inited) {
+      if (typeof fig1 === 'function' && variable_m === 'text1') fig1();
+      if (typeof fig2 === 'function' && variable_m === 'text2') fig2();
+      if (typeof fig3 === 'function' && variable_m === 'text3') fig3();
+      if (typeof fig4 === 'function' && variable_m === 'text4') fig4();
+      selected.dataset.inited = '1';
+    }
+  };
+})();
+</script>
+
+</body>
+</html>

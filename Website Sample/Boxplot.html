@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+		select {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			-ms-appearance: none;
+			appearance: none;
+			outline: 0;
+			border: 0;
+			box-shadow: none;
+			background: #808080;
+			background-image: none;
+			padding: 2vw;  
+			color:#242325; 
+			cursor: pointer;
+			font-size: 1.5vw;
+			font-family: "courier prime";
+		}
+		select::-ms-expand { display: none;}
+		.container {display: flex; align-items: center;justify-content: center;flex-direction: column}
+		.selection {
+			position: relative;
+            display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			
+			width: 30vw;
+			height: 7vw;
+			line-height: 8vw;
+			background: #808080;
+			overflow: hidden;
+			border-radius: 8vw;
+		}
+		.selection::after {
+			content: '\25BC';
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 0 1vw;
+			background: #fda736;
+			cursor: pointer;
+			pointer-events: none;
+			transition: 0.25s all ease;	
+		}
+		
+		.selection:hover::after {
+			color: #f4f4f9;	
+		}
+		
+
+        /* 样式化容器 */
+        #plot-container {
+            width: 100%;
+			align-items: center;
+            justify-content: center;
+			background-color: "#F4F4F9";
+			color: "#F4F4F9"
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 选择框 -->
+	<div class="container">
+	<div class="selection">
+    <select id="select-options" onchange="updateBoxplot()">
+		<option selected disabled>Please Choose the County</option>
+        <option value="group1">Manhattan With Doorman</option>
+        <option value="group2">Manhattan Without Doorman</option>
+		<option value="group3">Brooklyn</option>
+		<option value="group4">Queens</option>
+		<option value="group5">Bronx</option>
+    </select>
+	</div></div>
+    <!-- 包含图表的容器 -->
+    <div id="plot-container"></div>
+	
+	<!-- 引入 Plotly.js 库 -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+		var layout_0 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Here is an example, please choose a county', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		var layout_1 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Apartments With Doorman in Manhattan', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				title: "Year",
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		var layout_2 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Apartments Without Doorman in Manhattan', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				title: "Year",
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		var layout_3 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Apartments in Brooklyn', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				title: "Year",
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		var layout_4 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Apartments in Queens', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				title: "Year",
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		var layout_5 = {
+			paper_bgcolor: '#f4f4f9',
+			plot_bgcolor: "#f4f4f9",
+            title: {
+				text: 'Apartments in Bronx', 
+				font: {family: "courier prime", color: "#242325", size: 20 }},
+			xaxis: {
+				display: true,
+				autorange: true,
+				autotick: true,
+				zeroline: false,
+				title: "Year",
+				tickangle: 'auto',
+				tickfont: {family: 'courier prime', size: 12, color: '#242325'},
+			}, 
+            yaxis: {
+				autorange: true,
+				showgrid: true,
+				zeroline: true,
+				gridwidth: 0.5,
+				zerolinewidth: 3,
+				title: 'Rent change percentage',
+				gridcolor: '#242325',
+				zerolinecolor: "#A41623",		
+			},
+            showlegend: false,
+			//margin: {b: 0, l: 30, r: 30, t: 80},
+			font: {color: "#242325", family: "courier prime", size: 10},
+			modebar: {color: "#A41623"}
+        };
+		
+		var config = {
+			responsive: true,
+			modeBarButtonsToRemove: ['toImage','toggleSpikelines','zoom2d', "pan2d"],
+			displaylogo: false,
+			displayModeBar: true};
+		
+		var data_1 = [            
+			{
+                y: [3, 0, 4, -1, -5, -1, 12, 6, -4, 0, 1, 2, -1, 1],
+                type: 'box',
+                name: 'Sample',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Outlier 12",
+				boxmean: 'sd'
+            },
+];
+        // Manhattan With Doorman
+        var man1 = [
+            {
+                y: [3.16, 0.57, 4.24, -0.61, -7.45, -1.68, 13.2, 6.07, -4.69, 0.81, 0.92, -6.89, -1.68, -0.39, 1.28],
+                type: 'box',
+                name: '13-14',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Harlem 13.2",
+				boxmean: 'sd'
+            },
+            {
+                y: [6.44, 6.56, 10.36, 4.26, 6.83, 1.07, 16.36, 5.22, 1.10, 1.34, 0.81, 18.25, 5.33, 2.68, 3.18],
+                type: 'box',
+                name: '14-15',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Harlem 16.36 | Soho 18.25",
+				boxmean: 'sd'
+            },
+			{
+                y: [0.7, -0.22, -0.78, 0.4, -2.95, 3.1, -5.62, -5.93, -0.54, -2.55, -2.9, 0.34, 4.03, 0.69, 0.39],
+                type: 'box',
+                name: '15-16',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [1.05, -6.35, -2.16, 0.21, -2.27, 3.01, 3.71, 1.73, 1.37, -1.14, -0.34, 5.45, -4.33, 0.89, -1.85],
+                type: 'box',
+                name: '16-17',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [0.24, 4.89, -4.86, -2.43, 1.97, 2.37, -2.23, 4.38, -0.24, 0.79, 4.06, -2.59, 1.67, 1.77, 1.13],
+                type: 'box',
+                name: '17-18',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [3.3, 3.24, 9.05, 3.85, 4.72, 2.76, 0.34, 10.69, 6.11, 2.29, 3.9, -0.75, 1.08, 3.37, 2.39],
+                type: 'box',
+                name: '18-19',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "East Village 9.05 | Lower East Side 10.69",
+				boxmean: 'sd'
+            },
+			{
+                y: [-4.61, -7.83, -10.81, -6.17, -5.77, -4.07, -1.4, -8.28, -6.43, -8.38, -8.57, 0.03, -2.56, -5.48, -5.33],
+                type: 'box',
+                name: '19-20',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [-2.91, 6.2, 2.79, 6.82, 0.67, -2.24, -9.95, 4.57, -0.49, 3.77, 2.75, -1.12, 1.47, -3.08, 3.14],
+                type: 'box',
+                name: '20-21',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }, 
+			{
+                y: [18.41, 19.35, 20.46, 20.75, 15.55, 20.16, 21.37, 22.30, 20.28, 22.49, 20.12, 19.62, 21],
+                type: 'box',
+                name: '21-22',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Gramercy 15.55",
+				boxmean: 'sd'
+            }
+        ];
+		
+		// Manhattan Without Doorman
+		var man2 = [
+            {
+                y: [-1.49, -1.86, 2.43, -3.41, 3.33, 2.29, 0.79, 0.19, -4.46, -2.12, -4.12, -3.29, -2.05, -0.1],
+                type: 'box',
+                name: '13-14',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Harlem",
+				boxmean: 'sd'
+            },
+            {
+				y: [0.7, -2.74, 5.03, -1.34, -0.11, 5.4, -1.31, -5.31, 1.77, -1.88, 6.08, -5.51, 1.98, 0.45],
+                type: 'box',
+                name: '14-15',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Harlem 16.36 | Soho 18.25",
+				boxmean: 'sd'
+            },
+			{
+                y: [-7.73, 12.99, -14.11, 3.96, -11.23, 45.85, 16.54, 10.12, 15.09, 7.46, -13.27, -33.86, 20.25, 11.93],
+                type: 'box',
+                name: '15-16',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [1.45, 1.79, 0.97, 1.4, 1.25, 1.55, 1.27, 1.76, 1.39, 1.87, 1.85, 0.91, 1.49, 1.4],
+                type: 'box',
+                name: '16-17',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [-0.53, -0.64, 0.44, -0.99, -0.29, -0.59, -0.7, -1.12, -0.7, -0.97, -1.01, 0.27, -0.7, -1.11],
+                type: 'box',
+                name: '17-18',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "0.27 Tribaca | 0.44 Financial District",
+				boxmean: 'sd'
+            },
+			{
+                y: [1.14, 1.25, -0.06, 1, 1.03, 0.88, 0.92, 0.86, 0.74, 0.58, 0.61, 0.54, 0.8, 1.31],
+                type: 'box',
+                name: '18-19',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Financial District -0.06",
+				boxmean: 'sd'
+            },
+			{
+                y: [0.65, 0.51, 0.15, 0.78, -0.18, 0.78, 0.58, -0.24, 0.15, -0.06, -0.14, -1.54, -0.12, -3.25],
+                type: 'box',
+                name: '19-20',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "-3.25 Upper West Side | -1.54 Tribeca",
+				boxmean: 'sd'
+            },
+			{
+                y: [-16.58, -16.26, -16.88, -17.19, -16.02, -17.1, -16.63, -16.39, -16.56, -16.24, -17, -13.57, -16.29, -13.36],
+                type: 'box',
+                name: '20-21',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "-13.57 Tribeca | -13.36 Upper West Side",
+				boxmean: 'sd'
+            }, 
+			{
+                y: [28.1, 26.61, 27.26, 28.46, 27.78, 26.58, 27.45, 28.27, 27.76, 28.5, 26.69, 25.57, 28.6, 27.57],
+                type: 'box',
+                name: '21-22',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Gramercy",
+				boxmean: 'sd'
+            }]
+        
+		// Brooklyn
+		var bk = [
+            {
+                y: [6.72, 7.74, 4.55, 0.21, 5.43, 4.02, 6.36, 12.4, 3.05, 3.5, 3.55, 0.25, 1.47, 3.99, -0.12],
+                type: 'box',
+                name: '13-14',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+            {
+				y: [2.18, 2.43, 5.32, 1, -0.76, 1.18, 0, -4.3, 2.29, 5.85, 2.03, -4.9, 1.53, 0.58, 5.08],
+                type: 'box',
+                name: '14-15',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Greenpoint -4.9 | Crown Heights -4.3 | Dumbo 5.85",
+				boxmean: 'sd'
+            },
+			{
+                y: [5.18, 7.61, -3.37, -0.27, 4.13, 1.25, 4.6, 9.62, 2, -2.85, 4.85, 1.56, -0.83, 12.07, -5.59],
+                type: 'box',
+                name: '15-16',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [-1.15, 0.56, 0, 3.46, 0.09, -0.31, -3.71, -0.05, -0.28, 3.71, -1.44, -1.02, -0.87, 2.94, -3.73],
+                type: 'box',
+                name: '16-17',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Williamsburg -3.73 | Cobble Hill -3.71 | PLG/Flatbush 2.94 | Brooklyn Heights 3.46 | Dumbo 3.71",
+				boxmean: 'sd'
+            },
+			{
+                y: [0.66, 1.58, -0.62, 0.2, 4.47, 2.55, 2.15, 3.49, -18.42, 29.41, 3.91, -0.33, 3.37, 4.96, -3.88],
+                type: 'box',
+                name: '17-18',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Downtown BK -18.42 | Dumbo 29.41",
+				boxmean: 'sd'
+            },
+			{
+                y: [1.76, 3.12, 5.12, 10.24, 7.55, 7.99, 2.24, 2.87, 27, -16.95, 5.14, 13, 4.48, 1, 9.71],
+                type: 'box',
+                name: '18-19',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Dumbo -16.95 | Downtown BK 27",
+				boxmean: 'sd'
+            },
+			{
+                y: [0.27, -0.98, 1.5, -7.19, -3, -4.05, -2.55, -2.48, -23.65, 17.8, -3.34, -1.67, -4.89, -1.28, -2.98],
+                type: 'box',
+                name: '19-20',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Downtown BK -23.65 | Dumbo 17.8",
+				boxmean: 'sd'
+            },
+			{
+                y: [-1.4, 0.99, -8.99, -2.95, 3.09, -1.82, 0.54, -2.14, 5.79, -2.28, -0.22, -0.89, -2.15, -0.81],
+                type: 'box',
+                name: '20-21',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Boerum Hill -8.99 | Downtown BK 5.79",
+				boxmean: 'sd'
+            }, 
+			{
+                y: [7.38, 17.53, 21.03, 26.04, 15.39, 29.64, 23.29, 17.32, 23.36, 18.85, 27.84, 33.36, 22.59, 16.67, 25.24],
+                type: 'box',
+                name: '21-22',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }]
+		
+		// Queens
+        var queen = [
+			{
+                y: [-1.01, -2.07, 2.89, 1.38, 6.3, 1.85, 0.71],
+                type: 'box',
+                name: '17-18',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [2.59, -1.1, 2.38, 2.25, 5.89, 3.44, 3.91],
+                type: 'box',
+                name: '18-19',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				text: "Flushing -1.1",
+				boxmean: 'sd'
+            },
+			{
+                y: [-1.72, 4.99, 0.33, 3.17, -4.21, -0.18, -1.01],
+                type: 'box',
+                name: '19-20',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            },
+			{
+                y: [-4.04, -3.19, -4.68, -3.12, 1.81, 1.2, 0.34],
+                type: 'box',
+                name: '20-21',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }, 
+			{
+                y: [22.26, 3.53, 12.48, 7.67, 25.51, 3.47, 15.93],
+                type: 'box',
+                name: '21-22',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }]
+		
+		// Bronx
+		var br = [
+			{
+                y: [0.06, -1.67, 8.36, 4.63],
+                type: 'box',
+                name: '20-21',
+                marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }, 
+			{
+                y: [5.38, 7.83, 18.93, 3.93],
+                type: 'box',
+                name: '21-22',
+				marker: {
+					color: '#FDA736',
+					outlinecolor: "#808080",
+					line: {outlinecolor: "#808080", outlierwidth: 1,}},
+				line: {width: 1.5},
+                boxpoints: 'Outliers', // 显示所有数据点
+				boxmean: 'sd'
+            }]
+
+        // 绘制图表
+        Plotly.newPlot('plot-container', data_1, layout_0, config);
+
+        // 更新图表数据的函数
+        function updateBoxplot() {
+            // 获取选择框的值
+            var selectedOption = document.getElementById('select-options').value;
+			
+            if (selectedOption === 'group1') {
+				Plotly.newPlot('plot-container', man1, layout_1, config);
+            } else if (selectedOption === 'group2') {
+                Plotly.newPlot('plot-container', man2, layout_2, config);
+            } else if (selectedOption === 'group3') {
+                Plotly.newPlot('plot-container', bk, layout_3, config);
+            } else if (selectedOption === 'group4') {
+                Plotly.newPlot('plot-container', queen, layout_4, config);
+            } else if (selectedOption === 'group5') {
+                Plotly.newPlot('plot-container', br, layout_5, config);}
+        }
+    </script>
+
+</body>
+</html>

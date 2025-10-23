@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		.wholeset {
+		  background-color: #F4f4f9;
+		  align-items: flex-start;
+		  padding: 5vh;
+		  margin: 0;
+	  }
+	    .lazyLoadContainer {
+			height: 40px;
+			background-color: #F4F4F9;
+			width: 100vw;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+    }
+	    #loadedContent {
+		  width: 20vw;
+		  text-align: center;
+		  opacity: 0;
+		  transition: opacity 0.1s ease-in-out; /* 缩短过渡效果的时长 */
+		  font-family: Helvetica, Arial, "sans-serif";
+		  font-size: 6vw;
+		  font-weight: bold;
+		  color: #fda736;}
+	    #loadedContent_1 {
+		  width: 10vw;
+		  text-align: center;
+		  opacity: 0;
+		  transition: opacity 0.1s ease-in-out; /* 缩短过渡效果的时长 */
+		  font-family: Helvetica, Arial, "sans-serif";
+		  font-size: 6vw;
+		  font-weight: bold;
+		  color: #fda736;}
+	    .font_heading {
+			font-family: "courier prime", "sans-serif";
+			font-size: 5vw;
+		 	font-weight: bold;
+		 	letter-spacing: 0.5vw;
+		 	color: #A41623;
+		  	padding-bottom: 5px;
+		  	margin: 0;
+		  	margin-left: 10px;}
+	    .font_state {
+		 font-family: "courier prime", "sans-serif";
+		 font-size: 3vw;
+		 font-size: auto;
+		 font-weight: bold;
+		 color: #242325;
+	  }
+	</style>
+</head>
+<body>
+	<div class="wholeset">
+		<p class="font_heading">WHICH MEANS</p>
+		<div class="lazyLoadContainer">
+			<p class="font_state"> New Yorkers Spend</p>
+			<div id="loadedContent">0</div>
+			<p class="font_state"> on rent per month.</p>
+		</div>
+	</div>
+	<div class="wholeset">
+		<p class="font_heading">THAT IS TO SAY</p>
+		<div class="lazyLoadContainer">
+			<p class="font_state"> Hourly wage is $30, then work</p>
+			<div id="loadedContent_1">0</div>
+			<p class="font_state"> hours / week just for the rent.</p>
+		</div>
+</div>
+<script>
+
+// 创建 IntersectionObserver 实例，设置阈值为 0.7
+const intersectionObserver = new IntersectionObserver(handleIntersection, { threshold: 0.7 });
+
+// 获取需要加载的内容的元素
+const loadedContentElement = document.getElementById('loadedContent');
+const loadedContentElement_1 = document.getElementById('loadedContent_1');
+
+// 观察目标元素
+intersectionObserver.observe(loadedContentElement);
+
+// 处理 Intersection Observer 回调的函数
+function handleIntersection(entries) {
+  entries.forEach(entry => {
+    // 如果目标元素（#loadedContent）进入视口且与视口的交集面积超过70%
+    if (entry.isIntersecting && entry.intersectionRatio > 0.7) {
+      loadAndAnimateContent();
+      // 停止观察一旦加载内容
+      intersectionObserver.disconnect();
+    }
+  });
+}
+
+// 模拟加载和动画显示内容的函数
+function loadAndAnimateContent() {
+  const endValue = 2603;
+  const endValue_1 = 22;
+  const animationDuration = 1000; // 将动画时长缩短为 0.1 秒
+  const animationSteps = 30; // 将动画步数增加
+
+  // 计算每一帧应该增加的步数
+  const step = endValue / animationSteps;
+  const step_1 = endValue_1 / animationSteps;
+  let currentCount = 0;
+  let currentCount_1 = 0;
+
+  // 启动定时器执行动画
+  const animationInterval = setInterval(() => {
+    currentCount += step;
+	currentCount_1 += step_1;
+
+    // 更新显示的数值，四舍五入以避免小数点问题
+    loadedContentElement.textContent = "$" + Math.round(currentCount);
+	loadedContentElement_1.textContent = Math.round(currentCount_1);
+
+    // 动画结束时清除定时器
+    if (currentCount >= endValue) {
+      clearInterval(animationInterval);
+    }
+  }, animationDuration / animationSteps);
+
+  // 显示加载的内容
+  loadedContentElement.style.opacity = 1;
+  loadedContentElement_1.style.opacity = 1;
+}
+</script>
+
+</body>
