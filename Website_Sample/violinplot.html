@@ -55,17 +55,14 @@
 </head>
 
 <body>
-    <p class="sub">
-        Default shows <b>Manhattan (Doorman)</b>. Multi-select groups above.<br />
-        Violin is clipped to the former boxplot whiskers (<b>Q1–Q3 ± 1.5×IQR</b>), while values outside are plotted as
-        separate outlier points.
-    </p>
-
     <div class="card">
         <div class="controls" id="controls"></div>
         <div id="violin"></div>
-        <div class="note">Each violin = neighborhood YoY distribution within a year-bucket (clipped to ±1.5×IQR).
+        <div class="note">Each violin = neighborhood YoY distribution within a year-bucket (<b>clipped to ±1.5×IQR</b>).
             Outliers are shown as small dots.</div>
+        <div class="note">Violin is clipped to the former boxplot whiskers (<b>Q1–Q3 ± 1.5×IQR</b>), while values outside are plotted as
+            separate outlier points.
+        </div>
     </div>
 
     <script>
