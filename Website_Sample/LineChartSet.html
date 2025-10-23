@@ -13,7 +13,7 @@
 				 padding: 0;
 				}
 			.chartBox {
-				 width: 24vw;
+				 width: 32vw;
 				 padding: 0px;
 				 padding-bottom: 1vw;
 				 margin: 0px;
@@ -108,12 +108,12 @@
 					<h3>East Village</h3>
 					<canvas id="myChart2"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Financial District</h3>
 					<canvas id="myChart3"></canvas>
 				</div>
-			</div>
-			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Gramercy Park</h3>
 					<canvas id="myChart4"></canvas>
@@ -122,6 +122,8 @@
 					<h3>Greenwich Village</h3>
 					<canvas id="myChart5"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Harlem</h3>
 					<canvas id="myChart6"></canvas>
@@ -130,12 +132,12 @@
 					<h3>Lower East Side</h3>
 					<canvas id="myChart7"></canvas>
 				</div>
-			</div>
-			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Midtown East</h3>
 					<canvas id="myChart8"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Midtown West</h3>
 					<canvas id="myChart9"></canvas>
@@ -162,10 +164,6 @@
 					<h3>Upper West Side</h3>
 					<canvas id="myChart14"></canvas>
 				</div>
-				<div class="chartBox">
-					
-					<canvas id="sample_m1"></canvas>
-				</div>
 			</div>
 		</div>
 
@@ -184,12 +182,12 @@
 					<h3>Boerum Hill</h3>
 					<canvas id="myChartb2"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Brooklyn Heights</h3>
 					<canvas id="myChartb3"></canvas>
 				</div>
-			</div>
-			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Bushwick</h3>
 					<canvas id="myChartb4"></canvas>
@@ -198,6 +196,8 @@
 					<h3>Clinton Hill</h3>
 					<canvas id="myChartb5"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Cobble Hill</h3>
 					<canvas id="myChartb6"></canvas>
@@ -206,12 +206,12 @@
 					<h3>Crown Heights</h3>
 					<canvas id="myChartb7"></canvas>
 				</div>
-			</div>
-			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Downtown BK</h3>
 					<canvas id="myChartb8"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Dumbo</h3>
 					<canvas id="myChartb9"></canvas>
@@ -238,10 +238,7 @@
 					<h3>Williamsburg</h3>
 					<canvas id="myChartb14"></canvas>
 				</div>
-				<div class="chartBox">
-					<canvas id="myChartb15"></canvas>
-				</div>
-			</div>
+			</div>	
 		</div>
 		
 		<!-- Queens -->
@@ -259,12 +256,12 @@
 					<h3>Forest Hills</h3>
 					<canvas id="myChartq2"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Jackson Heights</h3>
 					<canvas id="myChartq3"></canvas>
 				</div>
-			</div>
-			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Long Island City</h3>
 					<canvas id="myChartq4"></canvas>
@@ -273,12 +270,17 @@
 					<h3>Rego Park</h3>
 					<canvas id="myChartq5"></canvas>
 				</div>
+			</div>
+			<div class="chartCard">
 				<div class="chartBox">
 					<h3>Ridgewood</h3>
 					<canvas id="myChartq6"></canvas>
 				</div>
 				<div class="chartBox">
 					<canvas id="myChartq7"></canvas>
+				</div>
+				<div class="chartBox">
+					<canvas id="myChartq8"></canvas>
 				</div>
 			</div>
 		</div>
@@ -298,9 +300,6 @@
 					<h3>Mott Haven</h3>
 					<canvas id="myChartbr2"></canvas>
 				</div>
-				<div class="chartBox">
-					<canvas id="myChartbr3"></canvas>
-				</div>
 			</div>
 
 		</div>
@@ -311,23 +310,6 @@
 			const labels_bronx = ['2020', '2021', '2022'];
 			const labels_queens = ['2017', '2018', '2019', '2020', '2021', '2022'];
 			
-			const options_m_sample = {
-				  responsive: true,
-				  scales: {
-				    x: {display: true, 
-						grid: {display: false,},
-						border: {color: "#A41623", lineWidth:3},
-					    ticks: {font: {family: "courier prime", size: 10}}},
-				    y: {display: true,
-						border: {color: "#F4F4F9",},
-						min: 2500,
-						max: 7500,
-						grid: {display: true, drawTicks: false, color: "#242325",},
-						ticks: {display: true, count: 5, font: {family: "courier prime", size: 10}},}
-				  },
-				  elements: {point: {radius: 2,},},
-				  plugins: {legend: {display: false,},}
-				};
 			//Manhattan With Doorman
 			const options_mb = {
 				  responsive: true,
